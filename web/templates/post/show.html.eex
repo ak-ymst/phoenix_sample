@@ -11,8 +11,32 @@
     <strong>Content:</strong>
     <%= @post.content %>
   </li>
-
+  
 </ul>
 
 <%= link "Edit", to: post_path(@conn, :edit, @post) %>
 <%= link "Back", to: post_path(@conn, :index) %>
+
+<h3>Comments</h3>
+<ul>
+    <%= for comment <- @post.comments do %>
+      <li><%= comment.name %>: <%= comment.content %> </li>
+    <%= end %>
+</ul>
+
+<%= form_for @comment_changeset, post_path(@conn, :add_comment, @post), fn f -> %>
+  <div class="form-group">
+    <span>名前: <%= text_input f, :name, size: 10 %></span>
+    <span><%= text_input f, :content, size: 50 %></span>
+    <%= error_tag f, :name %>
+    <%= error_tag f, :content %>
+  </div>
+  <div class="form-group">
+    <%= submit "コメントする", class: "btn btn-primary" %>
+  </div>
+<%= end %>    
+    
+
+
+
+

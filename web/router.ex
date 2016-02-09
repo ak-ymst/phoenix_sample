@@ -18,6 +18,7 @@ defmodule PhoenixSample.Router do
 
     get "/", PageController, :index
     resources "/posts", PostController
+    post "/posts/:id/comments", PostController, :add_comment
   end
 
   # Other scopes may use custom stacks.

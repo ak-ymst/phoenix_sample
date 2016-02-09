@@ -2,6 +2,7 @@ defmodule PhoenixSample.PostController do
   use PhoenixSample.Web, :controller
 
   alias PhoenixSample.Post
+  alias PhoenixSample.Comment
 
   plug :scrub_params, "post" when action in [:create, :update]
 
@@ -30,7 +31,12 @@ defmodule PhoenixSample.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
-    render(conn, "show.html", post: post)
+    
+    post = post |> Repo.preload(:comments)
+    
+    comment_changeset = Comment.changeset(%Comment{})
+    
+    render(conn, "show.html", post: post, comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -63,5 +69,21 @@ defmodule PhoenixSample.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: post_path(conn, :index))
+  end
+  
+  def add_comment(conn, %{"id" => id, "comment" => post_params}) do
+    post = Repo.get!(Post, id)
+    changeset = Comment.changeset(%Comment{post_id: post.id}, post_params)
+
+    case Repo.insert(changeset) do
+      {:ok, _post} ->
+        conn
+        |> put_flash(:info, "Comment create successfully.")
+        |> redirect(to: post_path(conn, :show, post))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:info, "Error occured.")
+        |> redirect(to: post_path(conn, :show, post))
+    end
   end
 end
