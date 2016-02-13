@@ -30,9 +30,7 @@ defmodule PhoenixSample.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Repo.get!(Post, id)
-    
-    post = post |> Repo.preload(:comments)
+    post = Repo.get!(Post, id) |> Repo.preload(:comments)
     
     comment_changeset = Comment.changeset(%Comment{})
     
