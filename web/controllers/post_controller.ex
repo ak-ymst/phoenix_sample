@@ -33,7 +33,7 @@ defmodule PhoenixSample.PostController do
     post = Repo.get!(Post, id) |> Repo.preload(:comments)
     
     comment_changeset = Comment.changeset(%Comment{})
-    
+
     render(conn, "show.html", post: post, comment_changeset: comment_changeset)
   end
 
@@ -69,19 +69,4 @@ defmodule PhoenixSample.PostController do
     |> redirect(to: post_path(conn, :index))
   end
   
-  def add_comment(conn, %{"id" => id, "comment" => post_params}) do
-    post = Repo.get!(Post, id)
-    changeset = Comment.changeset(%Comment{post_id: post.id}, post_params)
-
-    case Repo.insert(changeset) do
-      {:ok, _post} ->
-        conn
-        |> put_flash(:info, "Comment create successfully.")
-        |> redirect(to: post_path(conn, :show, post))
-      {:error, changeset} ->
-        conn
-        |> put_flash(:info, "Error occured.")
-        |> redirect(to: post_path(conn, :show, post))
-    end
-  end
 end

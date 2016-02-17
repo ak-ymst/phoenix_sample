@@ -24,7 +24,7 @@
     <%= end %>
 </ul>
 
-<%= form_for @comment_changeset, post_path(@conn, :add_comment, @post), fn f -> %>
+<%= form_for @comment_changeset, post_comment_path(@conn, :create, @post), fn f -> %>
   <div class="form-group">
     <span>名前: <%= text_input f, :name, size: 10 %></span>
     <span><%= text_input f, :content, size: 50 %></span>
