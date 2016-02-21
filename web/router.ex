@@ -17,12 +17,12 @@ defmodule PhoenixSample.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    
+
     resources "/posts", PostController, expect: [:delete] do
       resources "/comments", CommentController, only: [:create]
     end
   end
-  
+
   scope "/api", PhoenixSample do
     pipe_through :api
 
