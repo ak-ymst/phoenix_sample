@@ -1,7 +1,7 @@
 defmodule PhoenixSample.ApiPostControllerTest do
   use PhoenixSample.ConnCase
 
-  alias PhoenixSample.ApiPost
+  alias PhoenixSample.Post
   @valid_attrs %{}
   @invalid_attrs %{}
 
@@ -15,7 +15,7 @@ defmodule PhoenixSample.ApiPostControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    api_post = Repo.insert! %ApiPost{}
+    api_post = Repo.insert! %Post{}
     conn = get conn, api_post_path(conn, :show, api_post)
     assert json_response(conn, 200)["data"] == %{"id" => api_post.id}
   end
@@ -29,7 +29,7 @@ defmodule PhoenixSample.ApiPostControllerTest do
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, api_post_path(conn, :create), api_post: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(ApiPost, @valid_attrs)
+    assert Repo.get_by(Post, @valid_attrs)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -38,22 +38,22 @@ defmodule PhoenixSample.ApiPostControllerTest do
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    api_post = Repo.insert! %ApiPost{}
+    api_post = Repo.insert! %Post{}
     conn = put conn, api_post_path(conn, :update, api_post), api_post: @valid_attrs
     assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(ApiPost, @valid_attrs)
+    assert Repo.get_by(Post, @valid_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    api_post = Repo.insert! %ApiPost{}
+    api_post = Repo.insert! %Post{}
     conn = put conn, api_post_path(conn, :update, api_post), api_post: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    api_post = Repo.insert! %ApiPost{}
+    api_post = Repo.insert! %Post{}
     conn = delete conn, api_post_path(conn, :delete, api_post)
     assert response(conn, 204)
-    refute Repo.get(ApiPost, api_post.id)
+    refute Repo.get(Post, api_post.id)
   end
 end

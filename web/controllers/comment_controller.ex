@@ -15,7 +15,7 @@ defmodule PhoenixSample.CommentController do
         conn
         |> put_flash(:info, "Comment create successfully.")
         |> redirect(to: post_path(conn, :show, post))
-      {:error, changeset} ->
+      {:error} ->
         conn
         |> put_flash(:info, "Error occured.")
         |> redirect(to: post_path(conn, :show, post))
