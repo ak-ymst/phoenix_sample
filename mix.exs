@@ -19,7 +19,7 @@ defmodule PhoenixSample.Mixfile do
   def application do
     [mod: {PhoenixSample, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex]]
+                    :phoenix_ecto, :mariaex, :poolboy]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +37,10 @@ defmodule PhoenixSample.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:ecto_fixtures, github: "DockYard/ecto_fixtures"}]
+     {:ecto_fixtures, github: "DockYard/ecto_fixtures"},
+     {:poolboy, "~> 1.5.1"},
+     {:mcd, github: "EchoTeam/mcd"}
+    ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
