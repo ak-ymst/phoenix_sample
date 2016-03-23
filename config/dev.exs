@@ -40,3 +40,7 @@ config :phoenix_sample, PhoenixSample.Repo,
   database: "phoenix_sample_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :phoenix_sample, PhoenixSample.Memcached,
+  host: 'localhost',
+  port: 11211

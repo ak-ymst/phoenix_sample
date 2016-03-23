@@ -13,7 +13,8 @@ defmodule PhoenixSample.Memcached do
       max_overflow: 0,
     ]
 
-    arg = ['localhost', 11211]
+    config = Application.get_env(:phoenix_sample, __MODULE__, [])
+    arg = [config[:host], config[:port]]
 
     children = [
       :poolboy.child_spec(:memcached_pool, pool_options, arg)
